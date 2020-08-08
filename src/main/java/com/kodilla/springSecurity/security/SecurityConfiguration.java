@@ -14,12 +14,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
+
+                .mvcMatchers(HttpMethod.DELETE, "/**")
+                .hasAnyRole("R3")
+                .mvcMatchers(HttpMethod.POST, "/**")
+                .hasAnyRole("R2", "R3")
                 .mvcMatchers(HttpMethod.GET, "/messages/**")
                 .hasAnyRole("R1", "R2", "R3")
-                .mvcMatchers(HttpMethod.POST, "/**")
-                .hasAnyRole("R1", "R2")
-                .mvcMatchers(HttpMethod.DELETE, "/**")
-                .hasAnyRole("R1")
                 .anyRequest()
                 .fullyAuthenticated()
                 .and()

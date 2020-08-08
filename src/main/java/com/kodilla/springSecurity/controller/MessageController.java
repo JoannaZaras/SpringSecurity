@@ -16,9 +16,9 @@ public class MessageController {
     private final MessageService messageService;
 
 
-    @DeleteMapping(path = "/{index}")
-    private void m1(@PathVariable("index") int index) {
-        messageService.deleteMessage(index);
+    @GetMapping
+    private List<MessageDto> m1() {
+        return MessageMapper.toMessageDtoList(messageService.findAllMessages());
     }
 
     @PostMapping
@@ -26,9 +26,9 @@ public class MessageController {
         messageService.saveMessage(MessageMapper.toMessage(messageDto));
     }
 
-    @GetMapping
-    private List<MessageDto> m3() {
-        return MessageMapper.toMessageDtoList(messageService.findAllMessages());
+    @DeleteMapping(path = "/{index}")
+    private void m3(@PathVariable("index") int index) {
+        messageService.deleteMessage(index);
     }
 
 }
